@@ -1,0 +1,102 @@
+---
+---
+
+<footer class="bg-gradient-to-r from-black via-gray-900 to-black text-white py-16 relative overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div
+      class="h-full w-full"
+      style="background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px); background-size: 50px 50px;"
+    ></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid md:grid-cols-3 gap-12 footer-content opacity-0">
+      <div class="footer-section opacity-0 stagger-1">
+        <h3 class="text-2xl font-bold tracking-wider mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          АРХИТЕКТОР.ДИЗАЙН
+        </h3>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Профессиональное проектирование интерьеров с использованием современных технологий и инструментов.
+        </p>
+        <div class="flex space-x-4">
+          {[1, 2, 3].map((i) => (
+            <div class="w-10 h-10 border border-gray-600 hover:border-white transition-all duration-300 cursor-pointer hover:scale-110 flex items-center justify-center group">
+              <div class="w-2 h-2 bg-gray-600 group-hover:bg-white transition-colors duration-300"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="footer-section opacity-0 stagger-2">
+        <h4 class="font-bold tracking-wide mb-6 text-lg">УСЛУГИ</h4>
+        <ul class="space-y-3 text-gray-400">
+          {["Техническое проектирование", "Дизайн-проект", "3D визуализация", "Авторский надзор"].map((service) => (
+            <li class="hover:text-white transition-all duration-300 cursor-pointer hover:translate-x-2 flex items-center gap-2">
+              <div class="w-1 h-1 bg-gray-600"></div>
+              {service}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-section opacity-0 stagger-3">
+        <h4 class="font-bold tracking-wide mb-6 text-lg">КОНТАКТЫ</h4>
+        <div class="space-y-4 text-gray-400">
+          {[
+            { label: "Телефон:", value: "+7 (495) 123-45-67" },
+            { label: "Email:", value: "designer@example.com" },
+            { label: "Адрес:", value: "г. Москва, ул. Примерная, д. 123" },
+          ].map((contact) => (
+            <div class="hover:text-white transition-colors duration-300 cursor-pointer">
+              <span class="text-gray-500 text-sm">{contact.label}</span>
+              <br />
+              <span>{contact.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 mt-12 pt-8 text-center footer-bottom opacity-0">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-400 text-sm">© 2024 АРХИТЕКТОР.ДИЗАЙН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+        <div class="flex gap-6 text-sm text-gray-400">
+          <span class="hover:text-white transition-colors duration-300 cursor-pointer">
+            ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ
+          </span>
+          <span class="hover:text-white transition-colors duration-300 cursor-pointer">
+            УСЛОВИЯ ИСПОЛЬЗОВАНИЯ
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const footerContent = document.querySelector('.footer-content');
+    const footerSections = document.querySelectorAll('.footer-section');
+    const footerBottom = document.querySelector('.footer-bottom');
+
+    // Animate footer when it comes into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          footerContent?.classList.add('animate-fade-in');
+          footerSections.forEach(section => section.classList.add('animate-slide-up'));
+          
+          setTimeout(() => {
+            footerBottom?.classList.add('animate-fade-in');
+          }, 800);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const footer = document.querySelector('footer');
+    if (footer) {
+      observer.observe(footer);
+    }
+  });
+</script>
