@@ -1,4 +1,24 @@
 ---
+// Функция для расчёта стажа от указанной даты
+function calculateExperience(startDate: string): string {
+  const start = new Date(startDate);
+  const now = new Date();
+  
+  const diffTime = Math.abs(now.getTime() - start.getTime());
+  const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365.25));
+  const diffMonths = Math.floor((diffTime % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+  
+  if (diffYears === 0) {
+    return `${diffMonths}-месячным опытом`;
+  } else if (diffMonths === 0) {
+    return `${diffYears}-летним опытом`;
+  } else {
+    return `${diffYears}-летним опытом`;
+  }
+}
+
+const experience = calculateExperience('2016-01-01');
+
 const stats = [
   { 
     icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4 4 4 0 004-4V5z",
@@ -46,7 +66,7 @@ const stats = [
 
         <div class="space-y-6 text-gray-700">
           <p class="text-lg leading-relaxed about-paragraph opacity-0 stagger-1">
-            Профессиональный дизайнер интерьера с <span class="font-bold text-black">8-летним опытом</span>
+            Профессиональный дизайнер интерьера с <span class="font-bold text-black">{experience}</span>
             создания уникальных пространств. Специализируюсь на жилых и коммерческих проектах.
           </p>
           <p class="leading-relaxed about-paragraph opacity-0 stagger-2">
