@@ -1,6 +1,8 @@
 ---
 // Генерируем CSRF токен для защиты от CSRF атак
-const csrfToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+const csrfToken =
+  Math.random().toString(36).substring(2, 15) +
+  Math.random().toString(36).substring(2, 15);
 
 // Функция для валидации email
 function validateEmail(email: string): boolean {
@@ -17,60 +19,81 @@ function validatePhone(phone: string): boolean {
 // Функция для очистки и валидации текста
 function sanitizeText(text: string): string {
   return text
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<[^>]*>/g, '')
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<[^>]*>/g, "")
     .trim();
 }
-
-const contactInfo = [
-  {
-    icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z",
-    title: "ТЕЛЕФОН",
-    content: "+7 (***) **-**-**",
-  },
-  {
-    icon: "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
-    title: "EMAIL",
-    content: "ospanov.kz@mail.ru",
-  },
-  {
-    icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z",
-    title: "АДРЕС",
-    content: "г. Астана, ул. Примерная, д. 123",
-  },
-  {
-    icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
-    title: "РЕЖИМ РАБОТЫ",
-    content: "ПН-ПТ: 09:00 - 18:00\nСБ: 10:00 - 16:00\nВС: ВЫХОДНОЙ",
-  },
-];
 ---
 
-<section id="contact" class="py-24 bg-white relative overflow-hidden">
-  <!-- Background elements -->
-  <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-    <div class="absolute top-20 left-20 w-40 h-40 border border-gray-300 rotate-12"></div>
-    <div class="absolute bottom-20 right-20 w-32 h-32 border border-gray-300 -rotate-12"></div>
+<section id="contact" class="py-24 relative overflow-hidden">
+  <!-- Grid background -->
+  <div class="absolute inset-0 opacity-5">
+    <div
+      class="h-full w-full"
+      style="background-image: linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px); background-size: 50px 50px; background-position: center;"
+    >
+    </div>
+  </div>
+
+  <!-- Floating elements -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div
+      class="absolute top-20 left-20 w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+      style="animation-duration: 2s;"
+    >
+    </div>
+    <div
+      class="absolute top-40 right-32 w-1 h-1 bg-gray-500 rounded-full animate-pulse"
+    >
+    </div>
+    <div
+      class="absolute bottom-32 left-32 w-3 h-3 border border-gray-400 animate-spin"
+      style="animation-duration: 8s;"
+    >
+    </div>
+    <div
+      class="absolute bottom-20 right-20 w-2 h-2 bg-gray-300 animate-pulse"
+      style="animation-delay: 1s;"
+    >
+    </div>
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center mb-20 contact-header opacity-0">
-      <h2 class="text-4xl md:text-5xl font-bold tracking-wider mb-6 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+      <h2
+        class="text-4xl md:text-5xl font-bold tracking-wider mb-6 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
+      >
         КОНТАКТЫ
       </h2>
-      <div class="w-32 h-1 bg-gradient-to-r from-black to-gray-400 mx-auto mb-4"></div>
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-black to-gray-400 mx-auto mb-4"
+      >
+      </div>
       <p class="text-gray-600 max-w-2xl mx-auto">
         Готов обсудить ваш проект и воплотить ваши идеи в жизнь
       </p>
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-16">
+    <div class="flex justify-center">
       <!-- Contact form -->
-      <div class="contact-form opacity-0">
-        <div class="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 shadow-xl">
-          <h3 class="text-2xl font-bold tracking-wide mb-8 flex items-center gap-3">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+      <div class="contact-form opacity-0 w-full max-w-2xl">
+        <div
+          class="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 shadow-xl"
+        >
+          <h3
+            class="text-2xl font-bold tracking-wide mb-8 flex items-center gap-3"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
             </svg>
             СВЯЗАТЬСЯ СО МНОЙ
           </h3>
@@ -78,15 +101,16 @@ const contactInfo = [
           <form class="space-y-6" id="contact-form" novalidate>
             <!-- Скрытое поле для защиты от ботов -->
             <input type="hidden" name="honeypot" style="display: none;" />
-            
+
             <!-- CSRF токен -->
             <input type="hidden" name="csrf_token" value={csrfToken} />
-            
-
 
             <div class="grid md:grid-cols-2 gap-6">
               <div class="group">
-                <label for="name" class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200">
+                <label
+                  for="name"
+                  class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200"
+                >
                   ИМЯ *
                 </label>
                 <input
@@ -101,10 +125,14 @@ const contactInfo = [
                   pattern="[А-Яа-яA-Za-z\s]+"
                   title="Имя должно содержать только буквы и пробелы"
                 />
-                <div class="text-red-500 text-xs mt-1 hidden" id="name-error"></div>
+                <div class="text-red-500 text-xs mt-1 hidden" id="name-error">
+                </div>
               </div>
               <div class="group">
-                <label for="phone" class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200">
+                <label
+                  for="phone"
+                  class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200"
+                >
                   ТЕЛЕФОН *
                 </label>
                 <input
@@ -117,12 +145,16 @@ const contactInfo = [
                   pattern="[\+]?[0-9\s\-\(\)]{10,}"
                   title="Введите корректный номер телефона"
                 />
-                <div class="text-red-500 text-xs mt-1 hidden" id="phone-error"></div>
+                <div class="text-red-500 text-xs mt-1 hidden" id="phone-error">
+                </div>
               </div>
             </div>
 
             <div class="group">
-              <label for="email" class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200">
+              <label
+                for="email"
+                class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200"
+              >
                 EMAIL
               </label>
               <input
@@ -134,11 +166,15 @@ const contactInfo = [
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
                 title="Введите корректный email адрес"
               />
-              <div class="text-red-500 text-xs mt-1 hidden" id="email-error"></div>
+              <div class="text-red-500 text-xs mt-1 hidden" id="email-error">
+              </div>
             </div>
 
             <div class="group">
-              <label for="message" class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200">
+              <label
+                for="message"
+                class="block text-sm font-bold tracking-wide mb-2 group-focus-within:text-black transition-colors duration-200"
+              >
                 СООБЩЕНИЕ *
               </label>
               <textarea
@@ -151,63 +187,46 @@ const contactInfo = [
                 maxlength="1000"
                 title="Сообщение должно содержать минимум 10 символов"
               ></textarea>
-              <div class="text-red-500 text-xs mt-1 hidden" id="message-error"></div>
+              <div class="text-red-500 text-xs mt-1 hidden" id="message-error">
+              </div>
             </div>
-
-
 
             <button
               type="submit"
               id="submit-btn"
               class="w-full bg-black text-white hover:bg-gray-800 tracking-wide py-4 px-8 group relative overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span class="relative z-10 flex items-center justify-center gap-2">
-                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+              <span
+                class="relative z-10 flex items-center justify-center gap-2"
+              >
+                <svg
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                 </svg>
                 <span id="submit-text">ОТПРАВИТЬ СООБЩЕНИЕ</span>
               </span>
-              <div class="absolute inset-0 bg-gradient-to-r from-gray-800 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-gray-800 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+              </div>
             </button>
           </form>
         </div>
-      </div>
-
-      <!-- Contact information -->
-      <div class="space-y-6 contact-info opacity-0">
-        <h3 class="text-2xl font-bold tracking-wide mb-8">ИНФОРМАЦИЯ</h3>
-
-        {contactInfo.map((info, index) => (
-          <div class={`relative border border-gray-200 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all duration-500 cursor-pointer group contact-card opacity-0 stagger-${index + 1}`}>
-            <div class="p-6 pb-3">
-              <h4 class="flex items-center gap-3 font-bold tracking-wide group-hover:text-black transition-colors duration-300">
-                <div class="p-2 border border-gray-300 group-hover:border-black transition-all duration-300 group-hover:scale-110">
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={info.icon}></path>
-                  </svg>
-                </div>
-                {info.title}
-              </h4>
-            </div>
-            <div class="px-6 pb-6">
-              <div class="text-gray-700 group-hover:text-gray-900 transition-colors duration-300 whitespace-pre-line">
-                {info.content}
-              </div>
-            </div>
-
-            <!-- Hover effect border -->
-            <div class="absolute inset-0 border-2 border-transparent group-hover:border-black/10 transition-all duration-300 pointer-events-none"></div>
-          </div>
-        ))}
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-
-
+  document.addEventListener("DOMContentLoaded", () => {
     // Rate limiting - отслеживаем количество отправок
     let submitCount = 0;
     const maxSubmits = 10; // Максимум 10 отправок в час
@@ -215,18 +234,22 @@ const contactInfo = [
 
     // Функция для показа ошибок валидации
     function showError(fieldId: string, message: string) {
-      const errorElement = document.getElementById(`${fieldId}-error`) as HTMLElement;
+      const errorElement = document.getElementById(
+        `${fieldId}-error`,
+      ) as HTMLElement;
       if (errorElement) {
         errorElement.textContent = message;
-        errorElement.classList.remove('hidden');
+        errorElement.classList.remove("hidden");
       }
     }
 
     // Функция для скрытия ошибок валидации
     function hideError(fieldId: string) {
-      const errorElement = document.getElementById(`${fieldId}-error`) as HTMLElement;
+      const errorElement = document.getElementById(
+        `${fieldId}-error`,
+      ) as HTMLElement;
       if (errorElement) {
-        errorElement.classList.add('hidden');
+        errorElement.classList.add("hidden");
       }
     }
 
@@ -235,57 +258,61 @@ const contactInfo = [
       let isValid = true;
 
       // Проверка honeypot поля
-      const honeypot = formData.get('honeypot') as string;
+      const honeypot = formData.get("honeypot") as string;
       if (honeypot) {
-        console.warn('Bot detected via honeypot');
+        console.warn("Bot detected via honeypot");
         return false;
       }
 
-
-
       // Валидация имени
-      const name = formData.get('name') as string;
+      const name = formData.get("name") as string;
       if (!name || name.length < 2) {
-        showError('name', 'Имя должно содержать минимум 2 символа');
+        showError("name", "Имя должно содержать минимум 2 символа");
         isValid = false;
       } else if (!/^[А-Яа-яA-Za-z\s]+$/.test(name)) {
-        showError('name', 'Имя должно содержать только буквы');
+        showError("name", "Имя должно содержать только буквы");
         isValid = false;
       } else {
-        hideError('name');
+        hideError("name");
       }
 
       // Валидация email (необязательный)
-      const email = formData.get('email') as string;
-      if (email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-        showError('email', 'Введите корректный email');
+      const email = formData.get("email") as string;
+      if (
+        email &&
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+      ) {
+        showError("email", "Введите корректный email");
         isValid = false;
       } else {
-        hideError('email');
+        hideError("email");
       }
 
       // Валидация телефона (обязательный)
-      const phone = formData.get('phone') as string;
+      const phone = formData.get("phone") as string;
       if (!phone) {
-        showError('phone', 'Телефон обязателен');
+        showError("phone", "Телефон обязателен");
         isValid = false;
       } else if (!/^\+?[0-9\s\-\(\)]{10,}$/.test(phone)) {
-        showError('phone', 'Введите корректный номер телефона');
+        showError("phone", "Введите корректный номер телефона");
         isValid = false;
       } else {
-        hideError('phone');
+        hideError("phone");
       }
 
       // Валидация сообщения
-      const message = formData.get('message') as string;
+      const message = formData.get("message") as string;
       if (!message || message.length < 10) {
-        showError('message', 'Сообщение должно содержать минимум 10 символов');
+        showError("message", "Сообщение должно содержать минимум 10 символов");
         isValid = false;
       } else if (message.length > 1000) {
-        showError('message', 'Сообщение слишком длинное (максимум 1000 символов)');
+        showError(
+          "message",
+          "Сообщение слишком длинное (максимум 1000 символов)",
+        );
         isValid = false;
       } else {
-        hideError('message');
+        hideError("message");
       }
 
       return isValid;
@@ -295,10 +322,10 @@ const contactInfo = [
     function sanitizeData(data: any): any {
       const sanitized: any = {};
       for (const [key, value] of Object.entries(data)) {
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           sanitized[key] = value
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-            .replace(/<[^>]*>/g, '')
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+            .replace(/<[^>]*>/g, "")
             .trim();
         } else {
           sanitized[key] = value;
@@ -309,47 +336,45 @@ const contactInfo = [
 
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: "0px 0px -50px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const header = entry.target.querySelector('.contact-header');
-          const form = entry.target.querySelector('.contact-form');
-          const info = entry.target.querySelector('.contact-info');
-          const cards = entry.target.querySelectorAll('.contact-card');
+          const header = entry.target.querySelector(".contact-header");
+          const form = entry.target.querySelector(".contact-form");
 
-          header?.classList.add('animate-fade-in');
-          form?.classList.add('animate-slide-left');
-          info?.classList.add('animate-slide-right');
-          cards.forEach(card => card.classList.add('animate-slide-up'));
+          header?.classList.add("animate-fade-in");
+          form?.classList.add("animate-slide-up");
         }
       });
     }, observerOptions);
 
-    const contactSection = document.getElementById('contact');
+    const contactSection = document.getElementById("contact");
     if (contactSection) {
       observer.observe(contactSection);
     }
 
     // Form submission с защитой
-    const form = document.getElementById('contact-form') as HTMLFormElement;
-    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-    const submitText = document.getElementById('submit-text') as HTMLElement;
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    const submitBtn = document.getElementById(
+      "submit-btn",
+    ) as HTMLButtonElement;
+    const submitText = document.getElementById("submit-text") as HTMLElement;
 
     if (form) {
-      form.addEventListener('submit', async (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        
+
         // Проверка rate limiting
         if (submitCount >= maxSubmits) {
-          alert('Слишком много попыток отправки. Попробуйте позже.');
+          alert("Слишком много попыток отправки. Попробуйте позже.");
           return;
         }
 
         const formData = new FormData(form);
-        
+
         // Валидация формы
         if (!validateForm(formData)) {
           return;
@@ -357,81 +382,93 @@ const contactInfo = [
 
         // Очистка данных
         const data = sanitizeData(Object.fromEntries(formData));
-        
+
         // Увеличиваем счетчик отправок
         submitCount++;
-        
+
         // Блокируем кнопку
         submitBtn.disabled = true;
-        submitText.textContent = 'ОТПРАВКА...';
-        
+        submitText.textContent = "ОТПРАВКА...";
+
         try {
           // Отправляем данные на n8n webhook (простой формат как в примере)
           const webhookData = {
             name: data.name,
             email: data.email,
-            phone: data.phone || '',
+            phone: data.phone || "",
             message: data.message,
           };
 
-          console.log('Sending data to n8n:', webhookData);
+          console.log("Sending data to n8n:", webhookData);
 
-          const response = await fetch('https://n8n.defl-illusion.com/webhook/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+          const response = await fetch(
+            "https://n8n.defl-illusion.com/webhook/contact",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(webhookData),
             },
-            body: JSON.stringify(webhookData),
-          });
+          );
 
-          console.log('Response received:', response.status, response.statusText);
-          
+          console.log(
+            "Response received:",
+            response.status,
+            response.statusText,
+          );
+
           // При mode: 'no-cors' response.ok всегда false, но запрос отправляется
-          if (response.type === 'opaque') {
-            console.log('Request sent successfully (no-cors mode)');
+          if (response.type === "opaque") {
+            console.log("Request sent successfully (no-cors mode)");
           } else if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+            throw new Error(
+              `HTTP error! status: ${response.status} - ${response.statusText}`,
+            );
           } else {
             const result = await response.json();
-            console.log('n8n response:', result);
+            console.log("n8n response:", result);
           }
-          
+
           // Показываем успешное сообщение
-          alert('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
-          
+          alert("Сообщение отправлено! Мы свяжемся с вами в ближайшее время.");
+
           // Сбрасываем форму
           form.reset();
         } finally {
           // Разблокируем кнопку
           submitBtn.disabled = false;
-          submitText.textContent = 'ОТПРАВИТЬ СООБЩЕНИЕ';
+          submitText.textContent = "ОТПРАВИТЬ СООБЩЕНИЕ";
         }
 
         // Очищаем старые таймауты
-        submitTimeouts.forEach(timeout => clearTimeout(timeout));
+        submitTimeouts.forEach((timeout) => clearTimeout(timeout));
         submitTimeouts.length = 0;
 
         // Сбрасываем счетчик через час
-        const timeout = setTimeout(() => {
-          submitCount = 0;
-        }, 60 * 60 * 1000);
+        const timeout = setTimeout(
+          () => {
+            submitCount = 0;
+          },
+          60 * 60 * 1000,
+        );
         submitTimeouts.push(timeout);
       });
     }
 
     // Добавляем валидацию в реальном времени
-    const inputs = form?.querySelectorAll('input, textarea');
-    inputs?.forEach(input => {
+    const inputs = form?.querySelectorAll("input, textarea");
+    inputs?.forEach((input) => {
       // Скрываем ошибку при начале ввода
-      input.addEventListener('input', () => {
+      input.addEventListener("input", () => {
         const fieldId = input.id;
         if (fieldId) {
           hideError(fieldId);
         }
       });
-      
+
       // Валидируем при потере фокуса
-      input.addEventListener('blur', () => {
+      input.addEventListener("blur", () => {
         const formData = new FormData(form);
         validateForm(formData);
       });

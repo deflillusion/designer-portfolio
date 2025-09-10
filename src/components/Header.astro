@@ -1,7 +1,28 @@
 ---
+// Определяем текущую страницу
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === "/";
+
+// Функция для создания правильных ссылок
+function getNavHref(href: string): string {
+  if (href.startsWith("/")) {
+    // Если это полная ссылка (например, /portfolio), возвращаем как есть
+    return href;
+  } else if (href.startsWith("#")) {
+    // Если это якорь, проверяем текущую страницу
+    if (isHomePage) {
+      return href; // На главной странице используем якорь
+    } else {
+      return `/${href}`; // На других страницах переходим на главную с якорем
+    }
+  }
+  return href;
+}
+
 const navItems = [
   { name: "О СЕБЕ", href: "#about" },
   { name: "ПОРТФОЛИО", href: "#portfolio" },
+  { name: "ВСЕ ПРОЕКТЫ", href: "/portfolio" },
   { name: "УСЛУГИ", href: "#services" },
   { name: "КОНТАКТЫ", href: "#contact" },
 ];
@@ -24,7 +45,7 @@ const navItems = [
         {
           navItems.map((item) => (
             <a
-              href={item.href}
+              href={getNavHref(item.href)}
               class="relative text-gray-700 hover:text-black transition-colors text-sm tracking-wide group"
             >
               {item.name}
@@ -72,7 +93,7 @@ const navItems = [
         {
           navItems.map((item) => (
             <a
-              href={item.href}
+              href={getNavHref(item.href)}
               class="text-gray-700 hover:text-black transition-colors text-sm tracking-wide mobile-nav-link px-4 py-2 hover:bg-gray-50"
             >
               {item.name}
