@@ -6,15 +6,15 @@ export const portfolioProjects: PortfolioProject[] = [
         title: "СОВРЕМЕННАЯ КВАРТИРА",
         category: "ЖИЛОЙ ИНТЕРЬЕР",
         area: "85 М²",
-        image: "portfolio/project-1/1-1.jpg",
+        image: "/portfolio/project-1/1-1.jpg",
         year: "2024",
         description: "Современная квартира в стиле минимализм с акцентом на функциональность и эстетику",
         tags: ["минимализм", "современный стиль", "функциональность"],
         featured: true,
         gallery: [
-            "portfolio/project-1/1-1.jpg",
-            "portfolio/project-1/1-2.jpg",
-            "portfolio/project-1/1-3.jpg"
+            "/portfolio/project-1/1-1.jpg",
+            "/portfolio/project-1/1-2.jpg",
+            "/portfolio/project-1/1-3.jpg"
         ]
     },
     {
@@ -22,15 +22,15 @@ export const portfolioProjects: PortfolioProject[] = [
         title: "СПАЛЬНЯ",
         category: "ЖИЛОЙ ИНТЕРЬЕР",
         area: "20 М²",
-        image: "portfolio/project-2/spalnya-120-1.jpg",
+        image: "/portfolio/project-2/spalnya-120-1.jpg",
         year: "2025",
         description: "Современная спальня в стиле минимализм с акцентом на функциональность и эстетику",
         tags: ["минимализм", "современный стиль", "функциональность"],
         featured: true,
         gallery: [
-            "portfolio/project-2/spalnya-120-1.jpg",
-            "portfolio/project-2/spalnya-120-2.jpg",
-            "portfolio/project-2/spalnya-120-3.jpg"
+            "/portfolio/project-2/spalnya-120-1.jpg",
+            "/portfolio/project-2/spalnya-120-2.jpg",
+            "/portfolio/project-2/spalnya-120-3.jpg"
         ]
     },
 ];
