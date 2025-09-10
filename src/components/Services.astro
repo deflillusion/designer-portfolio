@@ -132,7 +132,7 @@ const services = [
     rootMargin: '0px 0px -50px 0px'
   };
 
-  const observer = new IntersectionObserver((entries) => {
+  const servicesObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const header = entry.target.querySelector('.services-header');
@@ -147,7 +147,7 @@ const services = [
   document.addEventListener('DOMContentLoaded', () => {
     const servicesSection = document.getElementById('services');
     if (servicesSection) {
-      observer.observe(servicesSection);
+      servicesObserver.observe(servicesSection);
     }
   });
 </script>

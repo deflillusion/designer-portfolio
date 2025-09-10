@@ -108,29 +108,29 @@ const navItems = [
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     // Header scroll effect
-    const header = document.getElementById("header");
+    const headerElement = document.getElementById("header");
 
     const handleScroll = () => {
-      if (!header) return;
+      if (!headerElement) return;
 
       if (window.scrollY > 50) {
-        header.classList.add(
+        headerElement.classList.add(
           "bg-white/90",
           "backdrop-blur-sm",
           "border-b",
           "border-gray-200",
           "shadow-sm",
         );
-        header.classList.remove("bg-transparent");
+        headerElement.classList.remove("bg-transparent");
       } else {
-        header.classList.remove(
+        headerElement.classList.remove(
           "bg-white/90",
           "backdrop-blur-sm",
           "border-b",
           "border-gray-200",
           "shadow-sm",
         );
-        header.classList.add("bg-transparent");
+        headerElement.classList.add("bg-transparent");
       }
     };
 

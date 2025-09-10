@@ -151,7 +151,7 @@ const stats = [
     rootMargin: '0px 0px -50px 0px'
   };
 
-  const observer = new IntersectionObserver((entries) => {
+  const aboutObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const aboutText = entry.target.querySelector('.about-text');
@@ -171,7 +171,7 @@ const stats = [
   document.addEventListener('DOMContentLoaded', () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
-      observer.observe(aboutSection);
+      aboutObserver.observe(aboutSection);
     }
   });
 </script>

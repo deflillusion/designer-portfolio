@@ -339,7 +339,7 @@ function sanitizeText(text: string): string {
       rootMargin: "0px 0px -50px 0px",
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const contactObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const header = entry.target.querySelector(".contact-header");
@@ -353,7 +353,7 @@ function sanitizeText(text: string): string {
 
     const contactSection = document.getElementById("contact");
     if (contactSection) {
-      observer.observe(contactSection);
+      contactObserver.observe(contactSection);
     }
 
     // Form submission с защитой

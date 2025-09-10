@@ -139,7 +139,7 @@
     const footerBottom = document.querySelector(".footer-bottom");
 
     // Animate footer when it comes into view
-    const observer = new IntersectionObserver(
+    const footerObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -159,7 +159,7 @@
 
     const footer = document.querySelector("footer");
     if (footer) {
-      observer.observe(footer);
+      footerObserver.observe(footer);
     }
   });
 </script>

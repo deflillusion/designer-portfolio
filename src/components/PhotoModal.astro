@@ -376,7 +376,7 @@ const { projectId, projectTitle, gallery } = Astro.props;
     }
 
     // Initialize modal
-    const photoModal = new PhotoModal();
+    const photoModalInstance = new PhotoModal();
 
     // Global function to open modal
     (window as any).openPhotoModal = (
@@ -384,7 +384,7 @@ const { projectId, projectTitle, gallery } = Astro.props;
         title: string,
         startIndex: number = 0,
     ) => {
-        photoModal.open(images, title, startIndex);
+        photoModalInstance.open(images, title, startIndex);
     };
 </script>
 

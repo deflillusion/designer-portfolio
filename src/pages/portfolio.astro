@@ -195,7 +195,7 @@ import { portfolioProjects, getCategories } from '../data/portfolio';
       rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const portfolioPageObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const header = entry.target.querySelector('.portfolio-header');
@@ -209,7 +209,7 @@ import { portfolioProjects, getCategories } from '../data/portfolio';
 
     const portfolioSection = document.querySelector('section');
     if (portfolioSection) {
-      observer.observe(portfolioSection);
+      portfolioPageObserver.observe(portfolioSection);
     }
 
     // Add click handlers for project cards
