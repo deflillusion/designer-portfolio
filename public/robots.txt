@@ -1,24 +1,10 @@
 User-agent: *
 Allow: /
 
-# Разрешаем индексацию всех страниц
-Allow: /portfolio/
-
-# Запрещаем индексацию служебных файлов
-Disallow: /_astro/
-Disallow: /*.json$
-Disallow: /*.js$
-Disallow: /*.css$
+# Разрешаем индексацию ассетов (важно для корректного рендеринга)
+Allow: /_astro/
+Allow: /*.js$
+Allow: /*.css$
 
 # Указываем путь к sitemap
 Sitemap: https://midstudio.kz/sitemap-index.xml
-
-# Дополнительные настройки для разных поисковиков
-User-agent: Googlebot
-Allow: /
-
-User-agent: Yandex
-Allow: /
-
-User-agent: Bingbot
-Allow: /

@@ -4,6 +4,54 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+// Build absolute URLs based on configured site + current path
+const site = (Astro.site ?? new URL('https://midstudio.kz')).toString();
+const currentUrl = new URL(Astro.url.pathname, site).toString();
+const logoUrl = new URL('/MID-logo.png', site).toString();
+
+const orgLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "MID.STUDIO",
+  "description": "Профессиональный дизайн интерьера в Астане. Создание функциональных и эстетичных пространств с использованием современных технологий.",
+  "url": site,
+  "logo": logoUrl,
+  "image": logoUrl,
+  "telephone": "+7 (***) ***-**-**",
+  "email": "ospanov.kz@mail.ru",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Астана",
+    "addressCountry": "KZ"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "51.1694",
+    "longitude": "71.4491"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Астана"
+  },
+  "serviceType": [
+    "Дизайн интерьера",
+    "Техническое проектирование",
+    "3D визуализация",
+    "Дизайн-проект",
+    "Авторское сопровождение"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Услуги дизайна интерьера",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Техническое проектирование", "description": "Создание точных чертежей и планов в Revit с соблюдением всех строительных норм и стандартов" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Дизайн-проект", "description": "Разработка концепции интерьера с подбором материалов, мебели и декоративных элементов" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "3D визуализация", "description": "Создание фотореалистичных изображений будущего интерьера для полного понимания проекта" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Авторское сопровождение", "description": "Контроль выполнения работ на объекте и соответствие проекту на всех этапах реализации" } }
+    ]
+  },
+  "sameAs": ["https://www.instagram.com/it_s_mid"]
+};
 ---
 
 <!doctype html>
@@ -25,12 +73,12 @@ const { title } = Astro.props;
     <!-- Author -->
     <meta name="author" content="MID.STUDIO" />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://midstudio.kz/" />
+    <!-- Canonical URL (dynamic) -->
+    <link rel="canonical" href={currentUrl} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://midstudio.kz/" />
+    <meta property="og:url" content={currentUrl} />
     <meta
       property="og:title"
       content="MID.STUDIO - Профессиональный дизайн интерьера в Астане"
@@ -39,13 +87,13 @@ const { title } = Astro.props;
       property="og:description"
       content="Создание функциональных и эстетичных пространств с использованием современных технологий. Revit, 3ds Max, SketchUp. Техническое проектирование и 3D визуализация."
     />
-    <meta property="og:image" content="https://midstudio.kz/MID-logo.png" />
+    <meta property="og:image" content={logoUrl} />
     <meta property="og:site_name" content="MID.STUDIO" />
     <meta property="og:locale" content="ru_RU" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://midstudio.kz/" />
+    <meta property="twitter:url" content={currentUrl} />
     <meta
       property="twitter:title"
       content="MID.STUDIO - Профессиональный дизайн интерьера в Астане"
@@ -54,10 +102,7 @@ const { title } = Astro.props;
       property="twitter:description"
       content="Создание функциональных и эстетичных пространств с использованием современных технологий. Revit, 3ds Max, SketchUp."
     />
-    <meta
-      property="twitter:image"
-      content="https://midstudio.kz/MID-logo.png"
-    />
+    <meta property="twitter:image" content={logoUrl} />
 
     <!-- Additional SEO -->
     <meta
@@ -141,79 +186,7 @@ const { title } = Astro.props;
     />
 
     <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "MID.STUDIO",
-        "description": "Профессиональный дизайн интерьера в Астане. Создание функциональных и эстетичных пространств с использованием современных технологий.",
-        "url": "https://midstudio.kz",
-        "logo": "https://midstudio.kz/MID-logo.png",
-        "image": "https://midstudio.kz/MID-logo.png",
-        "telephone": "+7 (***) ***-**-**",
-        "email": "ospanov.kz@mail.ru",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Астана",
-          "addressCountry": "KZ"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "51.1694",
-          "longitude": "71.4491"
-        },
-        "areaServed": {
-          "@type": "City",
-          "name": "Астана"
-        },
-        "serviceType": [
-          "Дизайн интерьера",
-          "Техническое проектирование",
-          "3D визуализация",
-          "Дизайн-проект",
-          "Авторское сопровождение"
-        ],
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Услуги дизайна интерьера",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Техническое проектирование",
-                "description": "Создание точных чертежей и планов в Revit с соблюдением всех строительных норм и стандартов"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Дизайн-проект",
-                "description": "Разработка концепции интерьера с подбором материалов, мебели и декоративных элементов"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "3D визуализация",
-                "description": "Создание фотореалистичных изображений будущего интерьера для полного понимания проекта"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Авторское сопровождение",
-                "description": "Контроль выполнения работ на объекте и соответствие проекту на всех этапах реализации"
-              }
-            }
-          ]
-        },
-        "sameAs": ["https://www.instagram.com/it_s_mid"]
-      }
-    </script>
+    <script type="application/ld+json">{JSON.stringify(orgLd)}</script>
   </head>
   <body
     class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-x-hidden"
