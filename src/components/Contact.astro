@@ -218,6 +218,26 @@ function sanitizeText(text: string): string {
               >
               </div>
             </button>
+
+            <div
+              id="form-status"
+              data-state="hidden"
+              class="hidden mt-6 rounded-lg border px-4 py-3 shadow-lg backdrop-blur-sm transition-all duration-300"
+              role="status"
+              aria-live="polite"
+            >
+              <div class="flex items-center gap-3">
+                <span
+                  id="form-status-indicator"
+                  class="inline-flex h-2 w-2 rounded-full bg-gray-400"
+                  aria-hidden="true"
+                ></span>
+                <span
+                  id="form-status-text"
+                  class="text-sm font-medium tracking-wide"
+                ></span>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -362,6 +382,96 @@ function sanitizeText(text: string): string {
       "submit-btn",
     ) as HTMLButtonElement;
     const submitText = document.getElementById("submit-text") as HTMLElement;
+    const statusContainer = document.getElementById(
+      "form-status",
+    ) as HTMLElement | null;
+    const statusTextElement = document.getElementById(
+      "form-status-text",
+    ) as HTMLElement | null;
+    const statusIndicator = document.getElementById(
+      "form-status-indicator",
+    ) as HTMLElement | null;
+
+    type StatusVariant = "info" | "success" | "error";
+
+    let statusAutoHideTimeout: ReturnType<typeof setTimeout> | null = null;
+    let statusHideTransitionTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    function clearStatusTimers() {
+      if (statusAutoHideTimeout) {
+        clearTimeout(statusAutoHideTimeout);
+        statusAutoHideTimeout = null;
+      }
+      if (statusHideTransitionTimeout) {
+        clearTimeout(statusHideTransitionTimeout);
+        statusHideTransitionTimeout = null;
+      }
+    }
+
+    function hideStatus(immediate = false) {
+      if (!statusContainer) {
+        return;
+      }
+
+      if (statusAutoHideTimeout) {
+        clearTimeout(statusAutoHideTimeout);
+        statusAutoHideTimeout = null;
+      }
+
+      if (immediate) {
+        statusContainer.classList.add("hidden");
+        statusContainer.classList.remove("opacity-0", "animate-fade-in");
+        statusContainer.dataset.state = "hidden";
+        return;
+      }
+
+      statusContainer.classList.add("opacity-0");
+
+      if (statusHideTransitionTimeout) {
+        clearTimeout(statusHideTransitionTimeout);
+      }
+
+      statusHideTransitionTimeout = setTimeout(() => {
+        statusContainer?.classList.add("hidden");
+        statusContainer?.classList.remove("opacity-0", "animate-fade-in");
+        if (statusContainer) {
+          statusContainer.dataset.state = "hidden";
+        }
+        statusHideTransitionTimeout = null;
+      }, 250);
+    }
+
+    function showStatus(
+      type: StatusVariant,
+      message: string,
+      autoHide = type !== "info",
+    ) {
+      if (!statusContainer || !statusTextElement || !statusIndicator) {
+        return;
+      }
+
+      clearStatusTimers();
+
+      statusContainer.classList.remove("hidden", "opacity-0");
+      statusContainer.classList.remove("animate-fade-in");
+      void statusContainer.offsetWidth;
+      statusContainer.classList.add("animate-fade-in");
+
+      statusTextElement.textContent = message;
+      statusContainer.dataset.state = type;
+
+      statusIndicator.classList.remove("animate-pulse");
+      void statusIndicator.offsetWidth;
+      statusIndicator.classList.add("animate-pulse");
+
+      if (autoHide) {
+        const duration = type === "error" ? 6000 : 4000;
+        statusAutoHideTimeout = setTimeout(() => {
+          statusAutoHideTimeout = null;
+          hideStatus();
+        }, duration);
+      }
+    }
 
     if (form) {
       form.addEventListener("submit", async (e) => {
@@ -369,7 +479,10 @@ function sanitizeText(text: string): string {
 
         // Проверка rate limiting
         if (submitCount >= maxSubmits) {
-          alert("Слишком много попыток отправки. Попробуйте позже.");
+          showStatus(
+            "error",
+            "Слишком много попыток отправки. Попробуйте позже.",
+          );
           return;
         }
 
@@ -377,6 +490,7 @@ function sanitizeText(text: string): string {
 
         // Валидация формы
         if (!validateForm(formData)) {
+          showStatus("error", "Проверьте корректность данных формы.");
           return;
         }
 
@@ -389,6 +503,8 @@ function sanitizeText(text: string): string {
         // Блокируем кнопку
         submitBtn.disabled = true;
         submitText.textContent = "ОТПРАВКА...";
+
+        showStatus("info", "Отправляем сообщение...", false);
 
         try {
           // Отправляем данные на n8n webhook
@@ -430,11 +546,19 @@ function sanitizeText(text: string): string {
             console.warn("Non-OK response:", response.status, response.statusText);
           }
 
-          // Показываем успешное сообщение
-          alert("Сообщение отправлено! Мы свяжемся с вами в ближайшее время.");
+          showStatus(
+            "success",
+            "Сообщение отправлено! Мы свяжемся с вами в ближайшее время.",
+          );
 
           // Сбрасываем форму
           form.reset();
+        } catch (error) {
+          console.error("Ошибка при отправке формы:", error);
+          showStatus(
+            "error",
+            "Не удалось отправить сообщение. Попробуйте ещё раз позже.",
+          );
         } finally {
           // Разблокируем кнопку
           submitBtn.disabled = false;
@@ -475,3 +599,76 @@ function sanitizeText(text: string): string {
     });
   });
 </script>
+
+<style>
+  #contact #form-status {
+    transform-origin: center;
+    transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #form-status[data-state="info"] {
+    border-color: rgba(59, 130, 246, 0.35);
+    background-color: rgba(59, 130, 246, 0.08);
+    color: #1d4ed8;
+    box-shadow: 0 12px 30px -20px rgba(59, 130, 246, 0.65);
+  }
+
+  #form-status[data-state="success"] {
+    border-color: rgba(16, 185, 129, 0.4);
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    box-shadow: 0 12px 30px -20px rgba(16, 185, 129, 0.6);
+  }
+
+  #form-status[data-state="error"] {
+    border-color: rgba(239, 68, 68, 0.4);
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+    box-shadow: 0 12px 30px -20px rgba(239, 68, 68, 0.6);
+  }
+
+  #form-status[data-state="info"] #form-status-indicator {
+    animation: statusPulse 1.6s ease-in-out infinite;
+    background-color: #3b82f6;
+  }
+
+  #form-status[data-state="success"] #form-status-indicator {
+    animation: statusGlow 1.4s ease-out forwards;
+    background-color: #10b981;
+  }
+
+  #form-status[data-state="error"] #form-status-indicator {
+    animation: statusPulse 1.1s ease-in-out infinite;
+    background-color: #ef4444;
+  }
+
+  @keyframes statusPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+    }
+    70% {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+
+  @keyframes statusGlow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    60% {
+      transform: scale(1.25);
+      box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+  }
+</style>
