@@ -284,7 +284,7 @@ function sanitizeText(text: string): string {
       }
 
       // Валидация имени
-      const name = formData.get("name") as string;
+      const name = (formData.get("name") as string || "").trim();
       if (!name || name.length < 2) {
         showError("name", "Имя должно содержать минимум 2 символа");
         isValid = false;
@@ -296,7 +296,7 @@ function sanitizeText(text: string): string {
       }
 
       // Валидация email (необязательный)
-      const email = formData.get("email") as string;
+      const email = (formData.get("email") as string || "").trim();
       if (
         email &&
         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
@@ -308,7 +308,7 @@ function sanitizeText(text: string): string {
       }
 
       // Валидация телефона (обязательный)
-      const phone = formData.get("phone") as string;
+      const phone = (formData.get("phone") as string || "").trim();
       if (!phone) {
         showError("phone", "Телефон обязателен");
         isValid = false;
@@ -319,8 +319,8 @@ function sanitizeText(text: string): string {
         hideError("phone");
       }
 
-      // Валидация сообщения
-      const message = formData.get("message") as string;
+      // Валидация сообщения (необязательный)
+      const message = (formData.get("message") as string || "").trim();
       if (message) {
         if (message.length < 10) {
           showError(
